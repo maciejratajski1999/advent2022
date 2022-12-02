@@ -1,0 +1,1 @@
+## Hello, I'm Maciej, and this is my adventofcode.com repo for year 2022
