@@ -27,17 +27,21 @@ class Node:
 
     def __update_tail(self):
         if self.__pos[0] - self.tail[0] > 1:
-            self.tail.step('D')
-            self.__straighten_tail('x')
+            if not self.__straighten_tail('x'):
+                self.tail.step('D')
+
         elif self.tail[0] - self.__pos[0] > 1:
-            self.tail.step('U')
-            self.__straighten_tail('x')
+            if not self.__straighten_tail('x'):
+                self.tail.step('U')
+
         elif self.__pos[1] - self.tail[1] > 1:
-            self.tail.step('R')
-            self.__straighten_tail('y')
+            if not self.__straighten_tail('y'):
+                self.tail.step('R')
+
         elif self.tail[1] - self.__pos[1] > 1:
-            self.tail.step('L')
-            self.__straighten_tail('y')
+            if not self.__straighten_tail('y'):
+                self.tail.step('L')
+
 
 #TODO: here is the error
     # def __straighten_tail(self, axis):
@@ -54,11 +58,17 @@ class Node:
                 self.tail.step('L')
             elif self.tail[1] < self.__pos[1]:
                 self.tail.step('R')
+            else:
+                return False
         elif axis == 'y':
             if self.tail[0] > self.__pos[0]:
                 self.tail.step('U')
-            if self.tail[0] < self.__pos[0]:
+            elif self.tail[0] < self.__pos[0]:
                 self.tail.step('D')
+            else:
+                return False
+        return True
+
 
     def get_snake(self):
         pos = [self.__pos]
