@@ -61,21 +61,27 @@ std::map<int, int> mapRegisterValues(std::vector<int> orders){
     int cycle = 0;
     int value = 1;
     for (int order : orders){
+        values[cycle] = value;
+        std::cout << ++cycle << " the cycle started, X: " << value << std::endl;
         if (order==0) {
-            ++cycle;
             std::cout << "noop " << std::endl;
         }
         else {
-            ++cycle;
             values[cycle] = value;
             ++cycle;
             value = value + order;
             std::cout << "addx " << order << std::endl;
         }
-        values[cycle] = value;
-        std::cout << cycle << "th cycle finished, X: " << value << std::endl;
     }
     return values;
+}
+void drawCRT(std::map<int, int> registerValues){
+    for (std::pair<int, int> state : registerValues){
+        int pixel = state.first % 40;
+        if (pixel == 0) std::cout << state.first << std::endl;
+        char lit = abs(pixel - state.second) <= 1 ? '#' : '.';
+        std::cout << lit;
+    }
 }
 int main() {
     std::vector orders = getOrders("input.txt");
@@ -85,5 +91,6 @@ int main() {
     for (int cycle : {19, 59, 99, 139, 179, 219}) valuesAtCycle.push_back(registerValues[cycle] * (cycle+1));
     printVector(valuesAtCycle);
     std::cout << sum(valuesAtCycle) << std::endl;
+    drawCRT(registerValues);
     return 0;
 }
